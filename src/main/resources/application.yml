@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: batch-sample
+  datasource:
+    #url: jdbc:db2://localhost:50000/testdb
+    jdbc-url: jdbc:db2://localhost:50000/testdb
+    username: db2inst1
+    password: password
+    driver-class-name: com.ibm.db2.jcc.DB2Driver
+
+logging:
+  level:
+    root: INFO
