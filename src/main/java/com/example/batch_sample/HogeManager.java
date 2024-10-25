@@ -12,13 +12,15 @@ import org.springframework.stereotype.Component;
 public class HogeManager {
     private static final Logger logger =
             LoggerFactory.getLogger(HogeManager.class);
-	/**
-	 * HOGEを表示
-	 */
-	public void showHoge() {
-		logger.info(properties.hoge);
-	}
 	
+	/**
+	 * 〇〇共通部品アプリケーション設定クラス
+	 */
+    @ConfigurationProperties("hoge-manager")
+    public static record HogeManagerProperties(String hoge) {
+    	
+    }
+    
 	private final HogeManagerProperties properties;
 	
 	/**
@@ -29,12 +31,11 @@ public class HogeManager {
 		this.properties = properties;
 	}
 	
-	
 	/**
-	 * 〇〇共通部品アプリケーション設定クラス
+	 * HOGEを表示
 	 */
-    @ConfigurationProperties("hoge-manager")
-    public static record HogeManagerProperties(String hoge) {
+	public void showHoge() {
+		logger.info(properties.hoge);// アプリケーション設定値の参照
+	}
 
-    }
 }

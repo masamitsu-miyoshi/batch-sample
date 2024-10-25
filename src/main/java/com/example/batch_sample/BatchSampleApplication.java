@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @SpringBootApplication
-@ConfigurationPropertiesScan("com.example.batch_sample")
+@ConfigurationPropertiesScan
 public class BatchSampleApplication {
 
 	public static void main(String[] args) {

@@ -2,7 +2,6 @@ package com.example.batch_sample;
 
 import javax.sql.DataSource;
 
-import org.springframework.batch.core.step.tasklet.TaskletStep;
 import org.springframework.boot.autoconfigure.batch.BatchDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
