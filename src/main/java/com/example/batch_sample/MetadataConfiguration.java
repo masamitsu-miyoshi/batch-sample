@@ -17,13 +17,12 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 public class MetadataConfiguration {
 	
 	/**
-	 * メタデータを無効化
+	 * メタデータをH2化
 	 * @return
 	 */
 	@BatchDataSource
     @Bean
     public DataSource metaDataSource() {
-		var a = new TaskletStep();
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         return builder.setType(EmbeddedDatabaseType.H2)
                 .addScript("classpath:org/springframework/batch/core/schema-drop-h2.sql")
@@ -31,7 +30,12 @@ public class MetadataConfiguration {
                 .build();
     }
 	
-    @Primary //メインテーブルの接続先に指定
+	/**
+	 * メインテーブルの接続先
+	 * CREATE TABLE TBL1(COL1 INTEGER, COL2 VARCHAR(50))
+	 * @return
+	 */
+    @Primary
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource mainDataSource(){

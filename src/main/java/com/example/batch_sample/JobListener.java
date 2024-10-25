@@ -6,7 +6,6 @@ import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.configuration.annotation.JobScope;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -20,10 +19,13 @@ public class JobListener implements JobExecutionListener {
     private static final Logger logger =
             LoggerFactory.getLogger(JobListener.class);
     
-	@Autowired
-	PlatformTransactionManager txManager;
+	private final PlatformTransactionManager txManager;
 	
-	TransactionStatus txStatus;
+	private TransactionStatus txStatus;
+	
+	public JobListener(PlatformTransactionManager txManager) {
+		this.txManager = txManager;
+	}
 	
 	@Override
 	public void beforeJob(JobExecution jobExecution) {

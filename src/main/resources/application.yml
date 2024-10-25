@@ -11,3 +11,6 @@ spring:
 logging:
   level:
     root: INFO
+
+hoge-manager:
+  hoge: あいうえお

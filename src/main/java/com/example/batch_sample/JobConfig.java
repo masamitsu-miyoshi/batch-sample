@@ -5,7 +5,6 @@ import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -13,26 +12,31 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration
 public class JobConfig {
 	
-	@Autowired
-	JobRepository jobRepository;
+	private final JobRepository jobRepository;
 	
-	@Autowired
-	PlatformTransactionManager transactionManager;
+	private final PlatformTransactionManager transactionManager;
 	
-	@Autowired
-	JobListener jobListener;
+	private final JobListener jobListener;
 	
-	@Autowired
-	MessageQueListener messageQueListener;
+	private final MessageQueListener messageQueListener;
+	
+	public JobConfig(JobRepository jobRepository, PlatformTransactionManager transactionManager, JobListener jobListener, MessageQueListener messageQueListener) {
+		this.jobRepository = jobRepository;
+		this.transactionManager = transactionManager;
+		this.jobListener = jobListener;
+		this.messageQueListener = messageQueListener;
+	}
 	
 	@Bean
 	public Job importUserJob(AppTasklet appTasklet) {
 		
+		// STEP定義
 		var step1 = new StepBuilder("step1", jobRepository)
 			.tasklet(appTasklet, transactionManager)
 			.listener(messageQueListener)
 			.build();
 		
+		// JOB定義
 		return new JobBuilder("importUserJob", jobRepository)
 				.listener(jobListener)
 				.incrementer(new RunIdIncrementer())
